@@ -24,7 +24,7 @@ const App: React.FC = () => {
   const obtenerEmbarcaciones = async () => {
     try {
       // Hace una solicitud GET a la API de embarcaciones /api/embarcaciones
-      const response = await axios.get<Embarcacion[]>("http://localhost:8080/api/embarcaciones");
+      const response = await axios.get<Embarcacion[]>("http://localhost:8009/api/embarcaciones");
       // Actualiza el estado (Información de las embarcaciones)
       setEmbarcaciones(response.data);
     } catch (error) {
@@ -36,7 +36,7 @@ const App: React.FC = () => {
   const manejarCrear = async (embarcacion: Omit<Embarcacion, "id">) => {
     try {
       // Hace una solicitud POST a la API de embarcaciones /api/embarcaciones
-      await axios.post<Embarcacion>("http://localhost:8080/api/embarcaciones", embarcacion);
+      await axios.post<Embarcacion>("http://localhost:8009/api/embarcaciones", embarcacion);
       // Actualiza el estado (Información de las embarcaciones)
       obtenerEmbarcaciones();
     } catch (error) {
@@ -49,7 +49,7 @@ const App: React.FC = () => {
     if (!embarcacionEdit) return;
     try {
       // Hace una solicitud PUT a la API de embarcaciones /api/embarcaciones
-      await axios.put<Embarcacion>(`http://localhost:8080/api/embarcaciones/${embarcacionEdit.id}`, embarcacion);
+      await axios.put<Embarcacion>(`http://localhost:8009/api/embarcaciones/${embarcacionEdit.id}`, embarcacion);
       // Actualiza el estado (Información de las embarcaciones)
       obtenerEmbarcaciones();
     } catch (error) {
@@ -61,7 +61,7 @@ const App: React.FC = () => {
   const manejarEliminar = async (id: number) => {
     try {
       // Hace una solicitud DELETE a la API de embarcaciones /api/embarcaciones
-      await axios.delete<Embarcacion>(`http://localhost:8080/api/embarcaciones/${id}`);
+      await axios.delete<Embarcacion>(`http://localhost:8009/api/embarcaciones/${id}`);
       // Actualiza el estado (Información de las embarcaciones)
       obtenerEmbarcaciones();
     } catch (error) {
