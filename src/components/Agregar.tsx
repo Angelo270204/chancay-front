@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"; // Importamos los hooks
 import { Embarcacion } from "../types"; // Importamos la interfaz de la embarcación
+import { TextField, Button, Container, Box } from '@mui/material';
 
 // Definimos las propiedades que recibirá este componente
 interface EmbarcacionFormProps {
@@ -32,57 +33,65 @@ const EmbarcacionForm: React.FC<EmbarcacionFormProps> = ({
     }
   }, [initialData]);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit({ nombre, capacidad, descripcion, fechaProgramada });
+    // Limpiar los campos después de enviar el formulario
+    setNombre('');
+    setCapacidad(0);
+    setDescripcion('');
+    setFechaProgramada('');
+  };
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit({ nombre, capacidad, descripcion, fechaProgramada });
-      }}
-      style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
-    >
-      <div style={{ marginBottom: '10px' }}>
-        <label htmlFor="nombre">Nombre:</label>
-        <input
+    <Container maxWidth="sm">
+      <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <TextField
           id="nombre"
-          type="text"
+          label="Nombre"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          style={{ display: 'block', marginTop: '5px' }}
+          fullWidth
+          sx={{ mb: 2 }}
         />
-      </div>
-      <div style={{ marginBottom: '10px' }}>
-        <label htmlFor="capacidad">Capacidad:</label>
-        <input
+        <TextField
           id="capacidad"
-          type="number"
+          label="Capacidad"
           value={capacidad}
           onChange={(e) => setCapacidad(Number(e.target.value))}
-          style={{ display: 'block', marginTop: '5px' }}
+          fullWidth
+          sx={{ mb: 2 }}
         />
-      </div>
-      <div style={{ marginBottom: '10px' }}>
-        <label htmlFor="descripcion">Descripción:</label>
-        <input
+        <TextField
           id="descripcion"
-          type="text"
+          label="Descripción"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          style={{ display: 'block', marginTop: '5px' }}
+          fullWidth
+          sx={{ mb: 2 }}
         />
-      </div>
-      <div style={{ marginBottom: '10px' }}>
-        <label htmlFor="fechaProgramada">Fecha Programada:</label>
-        <input
+        <TextField
           id="fechaProgramada"
+          label="Fecha Programada"
           type="date"
           value={fechaProgramada}
           onChange={(e) => setFechaProgramada(e.target.value)}
-          style={{ display: 'block', marginTop: '5px' }}
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          sx={{ mb: 2 }}
         />
-      </div>
-      <button type="submit" style={{ marginTop: '10px',marginBottom:'25px' }}>Guardar</button>
-      {onCancel && <button type="button" onClick={onCancel} style={{ marginTop: '10px' }}>Cancelar</button>}
-    </form>
+        <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mb: 2 }}>
+          Guardar
+        </Button>
+        {onCancel && (
+          <Button type="button" variant="outlined" color="secondary" fullWidth sx={{mb:2}} onClick={onCancel}>
+            Cancelar
+          </Button>
+        )}
+      </Box>
+    </Container>
   );
 };
 

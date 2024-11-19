@@ -1,9 +1,11 @@
 import React from "react";
 import { Embarcacion } from "../types";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 // Definimos las propiedades que recibirá este componente
 interface EmbarcacionTableProps {
-  // Lista de embarcaciones
   embarcaciones: Embarcacion[]; // Lista de embarcaciones a mostrar
   onEdit: (embarcacion: Embarcacion) => void; // Función cuando se edite
   onDelete: (id: number) => void; // Función para eliminar la embarcación
@@ -16,47 +18,40 @@ const EmbarcacionTable: React.FC<EmbarcacionTableProps> = ({
   onDelete,
 }) => {
   return (
-    <table
-      border={1}
-      cellPadding={10}
-      cellSpacing={0}
-      style={{ width: "100%", textAlign: "center" }}
-    >
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Nombre</th>
-          <th>Capacidad</th>
-          <th>Descripción</th>
-          <th>Fecha Programada</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {embarcaciones.map((embarcacion) => (
-          <tr key={embarcacion.id}>
-            {/* Muestra cada campo de la embarcación en una celda */}
-            <td>{embarcacion.id}</td>
-            <td>{embarcacion.nombre}</td>
-            <td>{embarcacion.capacidad}</td>
-            <td>{embarcacion.descripcion}</td>
-            <td>{embarcacion.fechaProgramada}</td>
-            <td>
-              {/* Botones para editar y eliminar */}
-              <button onClick={() => onEdit(embarcacion)}>Editar</button>
-              <button
-                onClick={() => onDelete(embarcacion.id)}
-                style={{ marginRight: "10px" }}
-              >
-                Eliminar
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Nombre</TableCell>
+            <TableCell>Capacidad</TableCell>
+            <TableCell>Descripción</TableCell>
+            <TableCell>Fecha Programada</TableCell>
+            <TableCell align="right">Acciones</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {embarcaciones.map((embarcacion) => (
+            <TableRow key={embarcacion.id}>
+              <TableCell>{embarcacion.id}</TableCell>
+              <TableCell>{embarcacion.nombre}</TableCell>
+              <TableCell>{embarcacion.capacidad}</TableCell>
+              <TableCell>{embarcacion.descripcion}</TableCell>
+              <TableCell>{embarcacion.fechaProgramada}</TableCell>
+              <TableCell align="right">
+                <IconButton onClick={() => onEdit(embarcacion)} color="primary">
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={() => onDelete(embarcacion.id)} color="secondary">
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
-// Exportamos el componente para su uso en otros archivos
 export default EmbarcacionTable;

@@ -80,24 +80,28 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ margin: "20px", padding: "20px", border: "1px solid #ccc" }}>
-      <h1>CRUD de Embarcaciones</h1>
-      {/* Componente de formulario para crear o editar embarcaciones */}
-      <EmbarcacionForm
-        // Determina qué función ejecutar para crear o editar embarcaciones
-        onSubmit={(embarcacion) =>
-          embarcacionEdit
-            ? manejarActualizar({ ...embarcacion, id: embarcacionEdit.id })
-            : manejarCrear(embarcacion)
-        }
-        onCancel={embarcacionEdit ? cancelarEdicion : undefined}
-        initialData={embarcacionEdit || undefined} // Datos iniciales para editar
-      />
-      <EmbarcacionTable
-        embarcaciones={embarcaciones}
-        onEdit={iniciarEdicion}
-        onDelete={manejarEliminar}
-      />
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100vw", height: "100vh" }}>
+      <div style={{ width: "80%", maxWidth: "800px", margin: "20px", padding: "20px", border: "1px solid #ccc", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}>
+        <h1 style={{ textAlign: "center" }}>CRUD de Embarcaciones</h1>
+        {/* Componente de formulario para crear o editar embarcaciones */}
+        <EmbarcacionForm
+          // Determina qué función ejecutar para crear o editar embarcaciones
+          onSubmit={(embarcacion) =>
+            embarcacionEdit
+              ? manejarActualizar({ ...embarcacion, id: embarcacionEdit.id })
+              : manejarCrear(embarcacion)
+          }
+          onCancel={embarcacionEdit ? cancelarEdicion : undefined}
+          initialData={embarcacionEdit || undefined} // Datos iniciales para editar
+        />
+        <div style={{ overflowX: "auto" }}>
+          <EmbarcacionTable
+            embarcaciones={embarcaciones}
+            onEdit={iniciarEdicion}
+            onDelete={manejarEliminar}
+          />
+        </div>
+      </div>
     </div>
   );
 };
